@@ -22,4 +22,3 @@ function solution(n, lost, reserve) {
     
     return n - lostStudent.length ;
 }
-
