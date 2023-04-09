@@ -1,9 +1,13 @@
 const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./example.txt";
-let input = fs.readFileSync(filePath).toString().split("\n").filter((v) => v !== '');
+let input = fs
+  .readFileSync(filePath)
+  .toString()
+  .split("\n")
+  .filter((v) => v !== "");
 
 const computers = parseInt(input.shift());
-const connectedList = input.map((item) => item.split(" ").map((v) => parseInt(v))).filter((v) => !isNaN(v[0]) && !isNaN(v[1]));
+const connectedList = input.slice(1).map((item) => item.split(" ").map((v) => parseInt(v)));
 
 const graph = [...Array(computers + 1)].map(() => []);
 connectedList.forEach(([from, to]) => {
