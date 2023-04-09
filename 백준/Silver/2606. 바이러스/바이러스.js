@@ -1,35 +1,28 @@
 const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./example.txt";
-let input = fs.readFileSync(filePath, "utf-8").toString().trim().split("\n");
+let input = fs.readFileSync(filePath).toString().split("\n").filter((v) => v !== '');
 
 const computers = parseInt(input.shift());
-const [networks] = input.shift().split(" ").map(Number);
-const edges = input.map((v) => v.split(" ").map(Number));
+const connectedList = input.map((item) => item.split(" ").map((v) => parseInt(v))).filter((v) => !isNaN(v[0]) && !isNaN(v[1]));
 
 const graph = [...Array(computers + 1)].map(() => []);
-
-edges.forEach(([from, to]) => {
+connectedList.forEach(([from, to]) => {
   graph[from].push(to);
   graph[to].push(from);
 });
 
-const dfs = (start) => {
+function DFS(graph, start) {
   const stack = [start];
   const visited = Array(computers + 1).fill(false);
-  const order = [];
   while (stack.length) {
     const node = stack.pop();
     if (!visited[node]) {
       visited[node] = true;
-      order.push(node);
       stack.push(...graph[node]);
     }
   }
-  return order.join(" ");
-};
+  return visited.filter((v) => v === true).length;
+}
+const result = DFS(graph, 1) - 1;
 
-graph.forEach((v) => v.sort((a, b) => b - a));
-
-let answer = dfs(1).split(" ").map(Number);
-
-console.log(answer.length - 1);
+console.log(result);
