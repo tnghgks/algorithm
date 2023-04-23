@@ -1,30 +1,21 @@
 function solution(progresses, speeds) {
     var answer = [];
-    let count = 0;
-    let days = 1;
-    let progress = 0;
+    let arr = [];
     
-    while(progresses[0]){
-
-        progress = progresses[0] + (speeds[0] * days ) ;
+    while(progresses.length > 0){
         
-        if(progress >= 100){
-            
-            count++
-            progresses.shift();
-            speeds.shift();
-            
-        }else{
-            if(count > 0){
-                answer.push(count);
-                
-            }
-            days++
-            count=0;
+        for(let i in progresses){
+            progresses[i] += speeds[i];
         }
-        
+        while(progresses[0] >= 100){
+            arr.push(progresses.shift())
+            speeds.shift()
+        }
+        if(arr.length){
+            answer.push(arr.length);
+            arr = [];
+        }
     }
-    answer.push(count);
     
     return answer;
 }
