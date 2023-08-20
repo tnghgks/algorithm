@@ -1,10 +1,8 @@
 function solution(n, left, right) {
     const answer = [];
-    const minMax = (a,b) => a < b ? [a,b] : [b,a]
-    const [min,max] = minMax(left,right);
-    
-    for(let i = min; i <= max; i++){
-        const [,max] = minMax(Math.floor(i/n)+1, i%n+1)
+
+    for(let i = left; i <= right; i++){
+        const max = Math.max(Math.floor(i/n),i%n)+1
         answer.push(max)
     }
 
