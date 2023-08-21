@@ -3,16 +3,16 @@ function solution(numbers, target) {
     
     dfs(0,0)
     
-    function dfs(level, sum){
-        if(level === numbers.length){
-            if(sum === target) answer += 1
-            return;
-        }
+    return answer;
+    
+    function dfs(startIdx,sum){
+        if(startIdx === numbers.length){
+            if(sum === target) return answer++
+            else return;
+        };
         
-        dfs(level +1, sum + numbers[level])
-        dfs(level +1, sum - numbers[level])
+        dfs(startIdx+1,sum + numbers[startIdx])
+        dfs(startIdx+1,sum - numbers[startIdx])
     }
     
-    
-    return answer;
 }
